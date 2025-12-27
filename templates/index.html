@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="static\images\Screenshot 2025-12-17 175256.png">
+    <title>BeamWorks – Beam Analysis Tool</title>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/static/style.css">
+
+    <!-- Plotly -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<div class="navbar">
+    <div class="nav-left">
+        <a href="/" class="nav-home">
+            <img src="/static/images/Screenshot 2025-12-17 175256.png"
+                 alt="BeamWorks Logo"
+                 class="nav-logo-img">
+        </a>
+
+        <a href="/" class="nav-brand">
+            <div class="nav-text">
+                <div class="nav-logo-text">BeamWorks</div>
+                <div class="nav-subtitle">A Beam Analysis Tool</div>
+            </div>
+        </a>
+    </div>
+
+    <div class="nav-right">
+        <a href="/">Home</a>
+        <a href="javascript:void(0)" onclick="openFeaturesDialog()">Features</a>
+        <a href="javascript:void(0)" onclick="openInfoDialog()">Info</a>
+        <a href="javascript:void(0)" onclick="openContactDialog()">Contact</a>
+    </div>
+</div>
+
+<!-- ================= CONTACT DIALOG ================= -->
+<div id="contactDialog" class="modal hidden">
+    <div class="modal-content modal-glow">
+        
+        <h2>Contact</h2>
+        <p><strong>Aurthor Name :</strong> Dasaroju Vineeth Kumar</p>
+        <p><strong>Education :</strong> Master's in Design Engineering (ME)</p>
+        <p><strong>Areas :</strong> Computaional Mechanics, Mechanical Design</p>
+        <p><strong>Email :</strong>
+            <a href="mailto:vineethkdasaroju@gmail.com">
+                vineethkdasaroju@gmail.com
+            </a>
+        </p>
+        <p><strong>Portfolio :</strong>
+            <a href="https://dvineethkumar.github.io/Personal-Portfolio/" target="_blank" rel="noopener noreferrer">
+                Personal Portfolio Website
+            </a>
+        </p>
+        <p><strong>Project:</strong> BeamWorks</p>
+        <button onclick="closeContactDialog()">Close</button>
+    </div>
+</div>
+
+<!-- ================= FEATURES DIALOG ================= -->
+<div id="featuresDialog" class="modal hidden">
+    <div class="modal-content modal-glow">
+
+        <h2 class="modal-title">Product Features</h2>
+
+        <ul class="features-list">
+            <li>
+                <strong>Multiple Beam Configurations</strong>
+                <span>Simply Supported, Cantilever, Overhang, and Fixed–Fixed beams</span>
+            </li>
+
+            <li>
+                <strong>Comprehensive Load Modeling</strong>
+                <span>Point loads, uniformly distributed loads (UDL), and applied moments</span>
+            </li>
+
+            <li>
+                <strong>Accurate Structural Response</strong>
+                <span>Reaction forces, shear force diagram (SFD), bending moment diagram (BMD)</span>
+            </li>
+
+            <li>
+                <strong>Deflection Analysis</strong>
+                <span>Numerical evaluation of beam deflection using material properties</span>
+            </li>
+
+            <li>
+                <strong>Interactive Visualization</strong>
+                <span>Real-time SVG beam rendering with load and support symbols</span>
+            </li>
+
+            <li>
+                <strong>Engineering-Grade Plotting</strong>
+                <span>High-resolution plots powered by Plotly.js</span>
+            </li>
+            <li>
+                <strong>Free of cost</strong>
+                <span>No paid or subscription required</span>
+            </li>
+        </ul>
+
+        <div class="modal-footer">
+            <button type="button" onclick="closeFeaturesDialog()">Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- ================= INFO DIALOG ================= -->
+<div id="infoDialog" class="modal hidden">
+    <div class="modal-content modal-glow">
+        
+        <h2>About BeamWorks</h2>
+        <p>
+            BeamWorks is an interactive structural analysis tool developed
+            for visualizing beam behavior under various loading and boundary
+            conditions using Euler's beam theory.
+        </p>
+        <p>
+            This is an academic project developed to help students and engineers to
+            quickly analyze beams for reactions, shear force, bending moment of beams. 
+        </p>
+        <p>
+            Author's Note: This tool is built by myself from conceptualization to coding and hosting.
+        </p>
+         <p>
+            Upcoming Verison 1.2.00 will include INDETERMNATE BEAM ANALYSIS.
+        </p>
+        <button onclick="closeInfoDialog()">Close</button>
+    </div>
+</div>
+
+
+<!-- ================= HERO ================= -->
+<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js"></script>
+
+<section class="hero-landing">
+    <model-viewer 
+        src="static/images/beam_finite_element_analysis.glb" 
+        auto-rotate 
+        camera-controls 
+        shadow-intensity="1"
+        environment-image="neutral"
+        exposure="0.8"
+
+        style="width: 100%; height: 100%; background-color: transparent;">
+    </model-viewer>
+
+    <div class="hero-overlay">
+        <div class="hero-content">
+            <h1 class="hero-title">BeamWorks</h1>
+            <p class="hero-subtitle">
+                An Interactive Beam Analysis Tool for SFD, BMD, Deflection & Reactions
+    
+            </p>
+            <a href="#analysis" class="hero-cta">Start Analysis</a>
+        </div>
+    </div>
+</section>
+
+<!-- ================= ANALYSIS DASHBOARD ================= -->
+
+<div class="container dashboard" id="analysis">
+
+    <div class="panel input-panel">
+        <div class="panel-header">Beam Parameters</div>
+
+        <div class="card">
+            <h2>Beam Type</h2>
+            <select id="beamType">
+                <option value="cantilever">Cantilever</option>
+                <option value="simply_supported" selected>Simply Supported</option>
+                <option value="overhang">Overhang</option>
+                <option value="fixed_fixed">Fixed–Fixed</option>
+            </select>
+        </div>
+
+        <div class="card">
+            <h2>Beam Definition</h2>
+            <label>Beam Length (m)</label>
+            <input type="number" id="length" value="5" min="0.1" step="0.1">
+        </div>
+
+        <div class="card hidden" id="overhang-config">
+            <h2>Overhang Configuration</h2>
+            <label>Overhang Length (m)</label>
+            <input type="number" id="overhangLength" value="1" min="0.1" step="0.1">
+        </div>
+
+        <div class="side-by-side-container">
+            <div class="card">
+                <h2>Loads</h2>
+                <div class="load-tabs">
+                    <button class="load-tab active" data-target="point-load">Point Load</button>
+                    <button class="load-tab" data-target="udl-load">UDL</button>
+                    <button class="load-tab" data-target="moment-load">Moment</button>
+                    <button class="load-tab" data-target="uvl-load">UVL</button>
+                </div>
+
+                <div class="load-window" id="point-load">
+                    <label>Position (m)</label><input id="pl_x" type="number">
+                    <label>Magnitude (kN)</label><input id="pl_p" type="number">
+                    <label>Angle (deg)</label><input id="pl_angle" type="number" value="90">
+                    <button class="primary-btn" onclick="addPointLoad()">Add</button>
+                </div>
+
+                <div class="load-window hidden" id="uvl-load">
+                    <label>Start (m)</label><input id="uvl_x1" type="number">
+                    <label>End (m)</label><input id="uvl_x2" type="number">
+                    <label>Start Intensity w₁ (kN/m)</label><input id="uvl_w1" type="number">
+                    <label>End Intensity w₂ (kN/m)</label><input id="uvl_w2" type="number">
+                    <button class="primary-btn" onclick="addUVL()">Add</button>
+                </div>
+
+                <div class="load-window hidden" id="moment-load">
+                    <label>Position (m)</label><input id="m_x" type="number">
+                    <label>Moment (kN·m)</label><input id="m_val" type="number">
+                    <button class="primary-btn" onclick="addMoment()">Add</button>
+                </div>
+                <div class="load-window hidden" id="udl-load">
+                    <label>Start (m)</label><input id="udl_x1" type="number">
+                    <label>End (m)</label><input id="udl_x2" type="number">
+                    <label>Intensity (kN/m)</label><input id="udl_w" type="number">
+                    <button class="primary-btn" onclick="addUDL()">Add</button>
+
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Material Properties</h2>
+                <label>Elasticity modulus (E) (Pa)</label>
+                <input id="E" type="number" value="210000000000">
+                <label>Moment of Inertia (I) (m⁴)</label>
+                <input id="I" type="number" value="0.000008">
+                <label>Density (ρ) (kg/m³)</label>
+                <input id="density" type="number" value="7850">
+                <label>Poisson's ratio (μ)</label>
+                <input id="mu" type="number" value="0.3">
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Applied Loads</h2>
+            <table class="load-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Type</th>
+                        <th>Details</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="loadTableBody">
+                    <tr><td colspan="4">No loads added</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="panel right-panel">
+        <div class="panel-header">Visualization & Results</div>
+
+        <div class="card">
+            <h2>Beam Visualization</h2>
+            <svg id="beamCanvas" width="100%" height="220" style="background:#f8fafc; border-radius:4px;"></svg>
+            <button onclick="solveBeam()" class="primary-btn" style="margin-top:15px;">Solve Beam</button>
+        </div>
+
+        <div class="card">
+            <h2>Results</h2>
+            <div class="result-tabs">
+                    <button class="result-tab active" data-target="sfd">SFD</button>
+                    <button class="result-tab" data-target="bmd">BMD</button>
+                    <button class="result-tab" data-target="deflection">Deflection</button>
+                    <button class="result-tab" data-target="animation-tab">Animation</button>
+                </div>
+
+                <div class="result-content">
+                    <div id="sfd" class="result-panel active"></div>
+                    <div id="bmd" class="result-panel"></div>
+                    <div id="deflection" class="result-panel"></div>
+                    
+                  <div id="animation-tab" class="result-panel">
+
+                        <div class="animation-container">
+
+                            <svg id="animationCanvas" viewBox="0 0 800 250">
+                                <defs>
+                                    <linearGradient id="beamGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                        <stop offset="10%" style="stop-color:#ffffff ; stop-opacity:1" />
+                                        <stop offset="50%" style="stop-color:#94a3b8; stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#94a3b8 ; stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <line x1="50" y1="125" x2="750" y2="125" stroke="#475569" stroke-dasharray="5,5" />
+                                <path id="deflectionPath" d="" />
+                            </svg>
+
+                            <div class="animation-controls">
+                                <button class="btn-play"  id="animToggleBtn" onclick="toggleModeAnimation()">
+                                    ▶ Play deflection
+                                </button>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                </div>
+            <p id="reactions" class="reaction-text"></p>
+            
+        </div>
+    </div>
+
+</div>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-left">
+            <div class="footer-brand">BeamWorks</div>
+            <div class="footer-tagline">A Beam Analysis Tool</div>
+        </div>
+
+        <div class="footer-center">
+            © 2025 BeamWorks — Version 1.0.00
+            <div class="footer-meta">
+                Developed for Education & Engineering Design
+            </div>
+        </div>
+
+        <div class="footer-right">
+            Designed & Developed by
+           
+             <div class="footer-meta">
+                <a href="mailto:vineethkdasaroju@gmail.com">
+                Dasaroju Vineeth Kumar
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- End of the web[Page] -->
+
+
+<!-- Scripts for tab switching in load and results tabs -->
+<!-- Scripts -->
+<script src="/static/script.js"></script>
+<script>
+    document.querySelectorAll('.result-tab').forEach(button => {
+        button.addEventListener('click', () => {
+            const targetId = button.getAttribute('data-target');
+
+            // 1. Remove 'active' class from all tabs
+            document.querySelectorAll('.result-tab').forEach(btn => btn.classList.remove('active'));
+            
+            // 2. Remove 'active' class from all panels
+            document.querySelectorAll('.result-panel').forEach(panel => panel.classList.remove('active'));
+
+            // 3. Add 'active' class to clicked tab
+            button.classList.add('active');
+
+            // 4. Add 'active' class to target panel
+            document.getElementById(targetId).classList.add('active');
+        });
+    document.addEventListener("DOMContentLoaded", () => {
+        const $ = id => document.getElementById(id);
+
+        document.querySelectorAll(".load-tab").forEach(tab => {
+            tab.addEventListener("click", () => {
+                const targetId = tab.getAttribute('data-target');
+                
+                // 1. Reset Tabs
+                document.querySelectorAll(".load-tab").forEach(t => t.classList.remove("active"));
+                
+                // 2. Hide all windows using the class
+                document.querySelectorAll(".load-window").forEach(w => {
+                    w.style.setProperty("display", "none", "important");
+                });
+
+                // 3. Activate current tab
+                tab.classList.add("active");
+
+                // 4. Show target window
+                const targetWindow = $(targetId);
+                if (targetWindow) {
+                    targetWindow.style.setProperty("display", "block", "important");
+                } else {
+                    console.error("Could not find element with ID:", targetId);
+                }
+            });
+        });
+    });
+});
+</script>
+</body>
+</html>

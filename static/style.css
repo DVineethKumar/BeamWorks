@@ -1,0 +1,670 @@
+/* ================= GLOBAL ================= */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
+    background: linear-gradient(
+        135deg,
+        #4a6183 10%,
+        #053058 35%,
+        #062b6e 70%,
+        #1d2858 100%
+    );
+    color: #111827;
+    background-attachment: fixed;
+}
+html, body {
+    max-width: 100%;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit; /* Ensures padding doesn't add to width */
+}
+/* ================= NAVBAR ================= */
+.navbar {
+    height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    background-color: #ffffff;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.nav-logo-img {
+    height: 52px;
+    cursor: pointer;
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.nav-home:hover .nav-logo-img {
+    transform: scale(1.3);
+    filter: brightness(1.4);
+}
+
+.nav-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-logo-text {
+    font-size: 30px;
+    font-weight: 700;
+    color: #314cc4;
+}
+
+.nav-subtitle {
+    font-size: 14px;
+    color: #64748b;
+}
+
+.nav-right a {
+    margin-left: 28px;
+    font-size: 17px;
+    color: #1e3a8a;
+    text-decoration: none;
+    position: relative;
+}
+
+.nav-right a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0;
+    height: 2px;
+    background: #ef4444;
+    transition: width 0.25s ease;
+}
+
+.nav-right a:hover::after {
+    width: 100%;
+}
+.nav-brand {
+    text-decoration: none;
+}
+
+.nav-brand:hover {
+    text-decoration: none;
+}
+
+/* ================= HERO ================= */
+/* ================= HERO SECTION (3D UPDATED) ================= */
+.hero-landing {
+    height: 30vh; 
+    background: transparent 50%;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+model-viewer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    pointer-events: none;
+
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    padding: 0 20px;
+}
+
+.hero-title {
+    font-size: 50px;
+    font-weight: 800;
+    background: linear-gradient(180deg, #ffffff 0%, #94a3b8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 40px;
+}
+
+
+.hero-subtitle {
+    font-size: 18px;
+    color: #b7cbe9;
+    margin-bottom: 25px;
+}
+.hero-cta {
+    padding: 2px 4px;
+    font-size: 18px;
+    font-weight: 600;
+    z-index: 11;
+    pointer-events: auto;
+    cursor: pointer;
+    color: #111827;
+    background: linear-gradient(180deg, #ffffff 0%, #94a3b8 100%);
+    border-radius: 6px;
+    text-decoration: none;
+
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hero-cta:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(34,211,238,0.35);
+}
+
+
+/* ================= DASHBOARD LAYOUT ================= */
+
+.container {
+    width: 100%; 
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.dashboard {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Equal split for Left and Right panels */
+    gap: 40px;
+    padding: 24px 40px; 
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.panel {
+    display: flex;
+    flex-direction: column;
+    gap: 28px !important; 
+    width: 100%;
+}
+
+/* ================= INTERNAL SIDE-BY-SIDE (LOADS | MATERIALS) ================= */
+.side-by-side-container {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    width: 100%;
+    align-items: stretch;
+}
+
+.side-by-side-container .card {
+    flex: 1; /* Forces Loads and Material Properties to be equal 50% width */
+    margin-bottom: 0 !important;
+}
+
+/* ================= CARDS ================= */
+.card {
+    width: 100%;
+    box-sizing: border-box;
+    background: #ffffff;
+    border-radius: 5px;
+    padding: 10px 22px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+}
+
+.card h2 {
+    font-size: 20px;
+    margin: 0 0 14px;
+    border-bottom: 1px solid #1c7dbe;
+    padding-bottom: 1px;
+}
+
+/* ================= INPUTS & LABELS ================= */
+label {
+    font-size: 14px;
+    margin-bottom: 4px;
+    display: block;
+    color: #475569;
+}
+
+input, select {
+    width: 100%; /* Changed from 94% to 100% for better alignment inside flex cards */
+    padding: 9px 12px;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+    margin-bottom: 10px;
+    box-sizing: border-box; /* Ensures padding doesn't push width over 100% */
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37,99,235,0.25);
+}
+
+/* ================= BUTTONS ================= */
+button {
+    background: linear-gradient(90deg, #2563eb, #3b82f6);
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: transform 0.1s ease;
+}
+
+button:active {
+    transform: scale(0.98); /* Visual feedback for the "Add" button click */
+}
+
+button:hover {
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
+}
+
+/* ================= LOAD TABS & WINDOWS ================= */
+.load-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.load-tab {
+    padding: 10px 16px;
+    border-radius: 2px;
+    background: #e5e7eb;
+    border: none;
+    cursor: pointer;
+    color: #334155;
+}
+
+.load-tab.active {
+    background: linear-gradient(90deg, #2563eb, #3b82f6);
+    color: white;
+}
+
+.load-window {
+    background: #f8fafc;
+    padding: 14px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ================= RESPONSIVENESS ================= */
+@media (max-width: 1024px) {
+    .dashboard {
+        grid-template-columns: 1fr; /* Stacks Left and Right panels */
+    }
+    
+    .side-by-side-container {
+        flex-direction: column; /* Stacks Loads and Materials */
+    }
+}
+/* ================= TABLE ================= */
+.load-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.load-table th, .load-table td {
+    border: 1px solid #e5e7eb;
+    padding: 10px;
+    text-align: center;
+}
+.hidden {
+    display: none !important;
+}
+
+/* Ensure active button stands out */
+.load-tab.active {
+    background-color: #2563eb; 
+    color: white;
+}
+/* ================= BEAM VISUAL ================= */
+#beamCanvas {
+    width: 100%;
+    height: 220px;
+    background: linear-gradient(#f9fafb, #f1f5f9);
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+}
+
+/* ================= RESULTS TABS ================= */
+.result-tabs {
+    display: flex;
+    gap: 18px;
+    margin-bottom: 12px;
+}
+
+.result-tab {
+    padding: 6px 14px;
+    border: none;
+    background: #e5e7eb;
+    color: #374151;
+    border-radius: 2px 2px 2px 2px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.result-tab.active {
+    background: #2563eb;
+    color: #fff;
+}
+
+.result-content {
+    border: 1px solid #e5e7eb;
+    border-radius: 0 8px 8px 8px;
+    padding: 10px;
+    background: #ffffff;
+}
+
+.result-panel {
+    display: none;
+    width: 100%;
+    height: 320px;
+}
+
+.result-panel.active {
+    display: block;
+}
+
+.reaction-text {
+    margin-top: 10px;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+
+/* ================= MODALS left info,contact ================= */
+.modal {
+    position: fixed;
+    inset: 0;
+    /* Use a dark, blurred background for a high-end software look */
+    background: rgba(15, 23, 42, 0.7); 
+    backdrop-filter: blur(8px); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal-content {
+    background: #ffffff;
+    padding: 10px;
+    border-radius: 16px;
+    width: 80%;
+    max-width: 480px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    border: 10px solid rgba(71, 132, 223, 0.2);
+}
+.modal-glow {
+    border: 2px solid #d0d3da;
+    animation: glowPulse 2.5s infinite;
+}
+
+@keyframes glowPulse {
+    0% { box-shadow: 0 0 10px rgba(37,99,235,0.4); }
+    50% { box-shadow: 0 0 28px rgba(37,99,235,0.75); }
+    100% { box-shadow: 0 0 10px rgba(37,99,235,0.4); }
+}
+
+
+/* ================= UTIL ================= */
+.hidden {
+    display: none !important;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 1024px) {
+    .dashboard {
+        grid-template-columns: 1fr;
+    }
+}
+/* ================= PANEL HEADER BOX FIX ================= */
+
+.panel-header {
+    display: inline-block;
+
+    /* box appearance */
+    background: #ffffff;
+    color: #0f172a;
+
+    padding: 10px 10px;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: 700;
+
+    /* separation from cards */
+    margin-bottom: -15px;
+
+    /* subtle depth */
+    box-shadow:
+        0 4px 12px rgba(0,0,0,0.12),
+        inset 0 1px 0 rgba(255,255,255,0.6);
+}
+.panel-header {
+    margin-top: 24px !important;   
+}
+
+/* ================= ANIMATION TAB ================= */
+
+
+.animation-container {
+    background: linear-gradient(180deg, #f8fafc, #eef2f7);
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 16px 18px 20px;
+    text-align: center;
+}
+
+/* Compact animation canvas */
+#beamAnimCanvas {
+    width: 100%;
+    max-width: 620px;     /* Reduced width */
+    height: 214px;        /* Reduced height */
+    margin: 10px auto 0;
+    display: block;
+}
+
+/* Reference (undeformed) beam */
+#beamAnimCanvas line {
+    stroke: #94a3b8;
+    stroke-dasharray: 6, 4;
+}
+
+/* Animated deflected shape */
+#deflectionPath {
+    fill: none;
+    stroke:  linear-gradient(180deg, #ffffff 0%, #94a3b8 100%);/* Apply a metallic/FEA gradient */
+    stroke-width: 12; /* Gives the beam physical thickness */
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* ================= PLAY / PAUSE CONTROL ================= */
+
+.animation-controls {
+    margin-top: 14px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Play / Pause button */
+.play-btn {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 6px 14px rgba(37, 99, 235, 0.25);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.play-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 18px rgba(37, 99, 235, 0.35);
+}
+
+.play-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+}
+
+/* ================= FOOTER ================= */
+.footer {
+    background: #0f172a;              /* dark slate */
+    color: #cbd5e1;                   /* muted text */
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 14px;
+    border-top: 1px solid #1e293b;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+/* Left */
+.footer-left {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-brand {
+    font-size: 20px;
+    font-weight: 600;
+    color: #e5e7eb;
+}
+
+.footer-tagline {
+    font-size: 14px;
+    color: #94a3b8;
+}
+
+/* Center */
+.footer-center {
+    text-align: center;
+    font-size: 17px;
+}
+
+.footer-meta {
+    color: #94a3b8;
+    margin-top: 2px;
+}
+
+/* Right */
+.footer-right {
+    font-size: 15px;
+}
+
+.footer-right a {
+    color: #38bdf8;                   /* professional blue */
+    text-decoration: none;
+}
+
+.footer-right a:hover {
+    text-decoration: underline;
+}
+
+.footer-sep {
+    margin: 0 8px;
+    color: #64748b;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+
+/* ================= FEATURES DIALOG – PROFESSIONAL GLOW ================= */
+
+.hidden {
+    display: none !important;
+}
+
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.modal-content {
+    background: #ffffff;
+    padding: 30px;
+    width: 460px;
+    border-radius: 12px;
+    position: relative;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.35);
+}
+
+.modal-close {
+    position: absolute;
+    right: 16px;
+    top: 12px;
+    font-size: 26px;
+    cursor: pointer;
+}
+/* ===== Glowing Modal ===== */
+.modal-glow {
+    border: 2px solid #2563eb;
+    box-shadow:
+        0 0 12px rgba(37, 99, 235, 0.65),
+        0 0 28px rgba(37, 99, 235, 0.45),
+        inset 0 0 8px rgba(37, 99, 235, 0.25);
+}
+
+/* Slight animation for premium feel */
+.modal-glow {
+    animation: glowPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+    0%   { box-shadow: 0 0 10px rgba(37,99,235,0.4); }
+    50%  { box-shadow: 0 0 28px rgba(37,99,235,0.75); }
+    100% { box-shadow: 0 0 10px rgba(37,99,235,0.4); }
+}
+
+/* Animation */
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to   { opacity: 1; transform: scale(1); }
+}
