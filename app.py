@@ -1,14 +1,21 @@
 from flask import Flask, render_template, request, jsonify
 from solver import solve_beam
+import os
 
 app = Flask(__name__)
 
 
+# =====================================================
+# HOME
+# =====================================================
 @app.route("/")
 def index():
     return render_template("index.html")
 
 
+# =====================================================
+# SOLVER API
+# =====================================================
 @app.route("/solve", methods=["POST"])
 def solve():
     try:
@@ -37,7 +44,9 @@ def solve():
         loads = data.get("loads") or []
 
         # ---------------- Overhang ----------------
-        overhang_length = data.get("overhangLength")
+        overhang_length = safe_float(
+            data.get("overhangLength"), None
+        )
 
         # ---------------- Solve ----------------
         result = solve_beam(
@@ -49,15 +58,14 @@ def solve():
             overhang_length=overhang_length
         )
 
-
         return jsonify(result)
 
     except Exception as e:
-        # Always return JSON (frontend-safe)
-        return jsonify({
-            "error": str(e)
-        }), 500
+        return jsonify({"error": str(e)}), 500
 
 
+# =====================================================
+# ENTRY POINT (LOCAL ONLY)
+# =====================================================
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run()
